@@ -2,15 +2,16 @@ import Link from "next/link";
 import { Megaphone } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions/auth";
+import { hasSupabaseConfig } from "@/lib/supabase/config";
 
 export async function Header() {
-  const supabase = await createClient();
+  const hasConfig = hasSupabaseConfig();
+  const supabase = hasConfig ? await createClient() : null;
   const {
     data: { user }
-  } = await supabase.auth.getUser();
-
+  } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   let role: string | null = null;
-  if (user) {
+  if (supabase && user) {
     const { data } = await supabase
       .from("profiles")
       .select("role")

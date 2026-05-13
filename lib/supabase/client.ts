@@ -4,5 +4,12 @@ import { createBrowserClient } from "@supabase/ssr";
 import { getSupabasePublishableKey, getSupabaseUrl } from "@/lib/supabase/config";
 
 export function createClient() {
-  return createBrowserClient(getSupabaseUrl(), getSupabasePublishableKey());
+  const supabaseUrl = getSupabaseUrl();
+  const supabaseKey = getSupabasePublishableKey();
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error("Supabase environment variables are missing.");
+  }
+
+  return createBrowserClient(supabaseUrl, supabaseKey);
 }

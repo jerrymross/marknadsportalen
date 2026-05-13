@@ -10,10 +10,16 @@ type CookieToSet = {
 
 export async function createClient() {
   const cookieStore = await cookies();
+  const supabaseUrl = getSupabaseUrl();
+  const supabaseKey = getSupabasePublishableKey();
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error("Supabase environment variables are missing.");
+  }
 
   return createServerClient(
-    getSupabaseUrl(),
-    getSupabasePublishableKey(),
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         getAll() {

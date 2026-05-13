@@ -20,9 +20,12 @@ cp .env.local.example .env.local
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 ```
+
+`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` är den rekommenderade publika nyckeln i nya Supabase-projekt. `NEXT_PUBLIC_SUPABASE_ANON_KEY` finns kvar som fallback för äldre projekt.
 
 4. Kör SQL i Supabase SQL Editor:
 
@@ -78,6 +81,13 @@ where email = 'admin@example.com';
 2. Importera projektet i Vercel.
 3. Lägg in samma miljövariabler i Vercel Project Settings.
 4. Deploya.
+
+Minst dessa två krävs i Vercel för att middleware och auth ska fungera:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+```
 
 ## Projektstruktur
 
